@@ -180,8 +180,8 @@ perms() { stat -c %a "$1" 2>/dev/null || stat -f %Lp "$1"; }
 }
 
 @test "status does not trust an invalid inherited profile name" {
-    in_shell 'temporal-status | head -1' TEMPORAL_ACTIVE_PROFILE=../../etc/x
-    [ "$output" = "Active Temporal profile: <invalid name>" ]
+    in_shell 'temporal-status' TEMPORAL_ACTIVE_PROFILE=../../etc/x
+    [ "${lines[0]}" = "Active Temporal profile: <invalid name>" ]
 }
 
 @test "reads profiles with CRLF line endings" {
@@ -248,8 +248,8 @@ perms() { stat -c %a "$1" 2>/dev/null || stat -f %Lp "$1"; }
 }
 
 @test "status says when the active profile's file is missing" {
-    in_shell 'temporal-status | head -1' TEMPORAL_ACTIVE_PROFILE=gone
-    [[ "$output" == *"gone ("*"gone.env, file missing)" ]]
+    in_shell 'temporal-status' TEMPORAL_ACTIVE_PROFILE=gone
+    [[ "${lines[0]}" == *"gone ("*"gone.env, file missing)" ]]
 }
 
 @test "an invalid inherited profile name doesn't trigger the rc-export hint" {
