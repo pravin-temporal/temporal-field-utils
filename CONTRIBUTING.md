@@ -1,41 +1,26 @@
 # Contributing
 
-Thanks for considering a contribution — this toolkit is meant to grow with
-whatever friction points come up in day-to-day field/platform-architecture
-work with Temporal.
+## Guidelines
 
-## Ground rules
+- **One script, one job.** Small, composable scripts over do-everything ones.
+- **Group by purpose** (`env/`, `diagnostics/`, …), not by tool or vendor.
+  Add a folder if nothing fits.
+- **Document it.** A short usage block at the top of the script, plus a
+  `README.md` in its folder (see `env/` for the pattern).
+- **Test it.** Run `make check` (needs [shellcheck](https://www.shellcheck.net/),
+  [bats](https://github.com/bats-core/bats-core), and zsh). CI runs the same.
 
-1. **No secrets, ever.** No real API keys, namespace IDs, internal hostnames,
-   or customer-identifying information in code, comments, examples, or
-   commit messages. Use obviously fake placeholders
-   (`my-namespace.a1b2c.tmprl.cloud:7233`, etc.).
-2. **One script, one job.** Prefer small, composable scripts over one script
-   that tries to do everything.
-3. **Group by purpose, not by tool.** Folders are organized around the kind
-   of problem a script solves (`env/`, `observability/`, `cost/`,
-   `diagnostics/`), not around which vendor or technology it touches —
-   since the repo itself is already scoped to Temporal, a `temporal/`
-   subfolder would be redundant. Create a new folder if nothing existing
-   fits the task.
-4. **Document usage at the top of the file.** A short comment block
-   explaining what the script does, how to install/source it, and the
-   commands it exposes — see `env/env-switch.sh` for the pattern.
-5. **Test before opening a PR.** At minimum, run the script yourself
-   end-to-end. Shell scripts should be checked with
-   [shellcheck](https://www.shellcheck.net/) where practical.
+## Secrets hygiene
 
-## Opening a PR
+- Never commit real API keys, addresses, namespace IDs, internal hostnames, or
+  customer data, even redacted, in code, examples, screenshots, or commit
+  messages. Use placeholders like `my-namespace.a1b2c.tmprl.cloud:7233`.
+- If your script writes local config or credential files, keep them outside
+  the repo and extend `.gitignore` before the first commit.
+- If GitHub secret scanning flags something, treat it as a real leak and
+  rotate the credential.
 
-- Briefly describe the problem the script solves and how you've tested it.
-- Keep PRs scoped to one script or one logical change where possible —
-  easier to review, easier to revert if something's off.
-- If you're updating an existing script's behavior (not just adding to it),
-  call that out explicitly in the PR description so others relying on it
-  aren't surprised.
+## Pull requests
 
-## Reporting issues
-
-If something in here breaks for you or seems unsafe (e.g. a secret-handling
-pattern you're not comfortable with), open an issue or reach out directly —
-no need for a polished writeup, a quick heads-up is enough.
+Keep PRs to one script or logical change, say how you tested it, and call
+out any behaviour change to an existing script.
