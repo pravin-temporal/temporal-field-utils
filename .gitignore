@@ -1,0 +1,21 @@
+# Secrets / local config — never commit these
+*.env
+.env
+.env.*
+cloud.env
+local.env
+.temporal/
+secrets/
+*.key
+*.pem
+*credentials*
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+
+# Shell history / logs accidentally captured during testing
+*.log
