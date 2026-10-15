@@ -24,6 +24,10 @@
 # Set TFU_CONFIG_DIR before sourcing to use another directory.
 # Nothing is sent anywhere.
 #
+# TFU = Temporal Field Utils (this repo). It prefixes this script's own
+# settings (TFU_*) and internals (_TFU_*, _tfu_*) to avoid clashing with
+# other tools or Temporal's official TEMPORAL_* variables.
+#
 # See env/README.md for details.
 
 # ---- Refuse to run unless sourced ---------------------------------------

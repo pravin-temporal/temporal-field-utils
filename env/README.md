@@ -67,19 +67,37 @@ Both `setup` and `import` ask before overwriting an existing profile.
   exported to everything you run from that shell.
 - Settings go before the `source` line: `TFU_AUTO_RESTORE=0` turns off
   auto-restore, and `TFU_CONFIG_DIR` stores profiles somewhere other than
-  `~/.temporal`.
+  `~/.temporal`. (`TFU` = Temporal Field Utils, the prefix for this repo's
+  own settings.)
 
-## Using it alongside CLI / SDK config profiles
+## CLI and SDK config profiles
 
-The Temporal CLI and SDKs also support TOML config profiles (`--profile`,
-`TEMPORAL_PROFILE`). Use those if they cover your needs. This script exports
-plain env vars instead, which work with every sample, SDK version, and tool.
+**TL;DR:** no conflicts; you can use both. Where both set a value, this
+script's env vars win over the TOML profile.
 
-If you have a TOML config file (`temporal.toml`), clients combine it with
-these env vars: env vars win, but anything a profile doesn't set comes from
-the TOML profile. For example, an `api_key` in the TOML default profile is
-also sent when you switch to `local`. Keep the TOML default profile free of
-credentials, or set every value you need in each profile here.
+The Temporal CLI and recent SDKs can load named profiles from a TOML file
+(`temporal.toml`, picked with `--profile` or `TEMPORAL_PROFILE`). If every
+tool you use supports that, you may not need this script.
+
+**Why use this instead:** it only sets plain `TEMPORAL_*` env vars, so it
+works with anything that reads them: the CLI, the SDKs, samples and your own
+code that read `TEMPORAL_ADDRESS` etc. directly (common in apps written
+before TOML profiles), and tools like Docker that pass env vars through. One
+command switches all of them for the whole shell, and `temporal-status`
+shows what's active.
+
+**How they interact:** this script never reads or changes the TOML file,
+`TEMPORAL_PROFILE` or `TEMPORAL_CONFIG_FILE`, and keeps its own files in
+`~/.temporal`. But clients combine both sources:
+
+- Env vars set here override the same settings from a TOML profile, even one
+  picked with `--profile`. Command-line flags still override both.
+- Settings a profile here doesn't set fall back to the TOML profile. For
+  example, an `api_key` in the TOML default profile is also sent when you
+  switch to `local`. Keep the TOML default profile free of credentials, or
+  set every value you need in each profile here.
+- Switching clears `TEMPORAL_ENV`, which selects a set from the CLI's older
+  `temporal env` command.
 
 ## Uninstall
 
