@@ -2,13 +2,12 @@
 *.env
 .env
 .env.*
-cloud.env
-local.env
+!*.env.example
 .temporal/
 secrets/
 *.key
 *.pem
-*credentials*
+credentials*.json
 
 # OS / editor cruft
 .DS_Store
