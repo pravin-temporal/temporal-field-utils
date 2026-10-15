@@ -21,6 +21,11 @@ Folders are grouped by purpose. Planned: `observability/`, `cost/`, `diagnostics
 Contributions are welcome. Please never commit credentials or customer data;
 see [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines and secrets hygiene.
 
+## Acknowledgements
+
+Built with [Claude Code](https://claude.com/claude-code) as my pair-programming
+partner: tireless, never steals the keyboard, and still asks for one more test.
+
 ## License
 
 [MIT](./LICENSE). This does not imply any endorsement by or affiliation with
